@@ -18,11 +18,10 @@ from utils import (
     render_template, wait_for_mysql, setup_logging
 )
 from upgrade import check_upgrade
-from bootstrap import init_seafile_server, is_https, init_letsencrypt, generate_local_nginx_conf
+from bootstrap import init_seafile_server
 
 
 shared_seafiledir = '/shared/seafile'
-ssl_dir = '/shared/ssl'
 generated_dir = '/bootstrap/generated'
 installdir = get_install_dir()
 topdir = dirname(installdir)
@@ -46,11 +45,6 @@ def main():
         os.mkdir(shared_seafiledir)
     if not exists(generated_dir):
         os.makedirs(generated_dir)
-
-    if is_https():
-        init_letsencrypt()
-    generate_local_nginx_conf()
-    call('nginx -s reload')
 
     wait_for_mysql()
     init_seafile_server()
