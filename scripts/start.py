@@ -46,9 +46,6 @@ def main():
     if not exists(generated_dir):
         os.makedirs(generated_dir)
 
-    wait_for_mysql()
-    init_seafile_server()
-
     check_upgrade()
     os.chdir(installdir)
 
